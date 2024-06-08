@@ -7,7 +7,7 @@ const Main = () => {
     return (
         <Box sx={{ height: '100%', display: 'grid', placeItems: 'center', alignContent: 'space-between'}}>
             <Box >
-                <img src={LOGO} alt="YAPPY" height={150} style={{ marginBottom: '50px' }} />
+                <img src={LOGO} alt="MAIN_LOGO" height={150} style={{ marginBottom: '50px' }} />
                 <Search />
             </Box>
         </Box>

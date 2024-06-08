@@ -23,15 +23,25 @@ const Video = ({url = '', videoId, width = '100%', height = '360px'}) => {
     }
 
     return (
-        <Box sx={{width: '100%', position: 'relative'}} className={`video-item ${isPlaying ? 'playing' : ''}`} ref={videoRef}>
-            {!isReady && (
-                <div className='.video-item__loading flex flex-center'>
-                    <Spinner/>
-                </div>
-            )}
+        <Box sx={{width: '100%', position: 'relative'}} ref={videoRef}>
+            {/*{!isReady && (*/}
+            {/*    <div className='.video-item__loading flex flex-center'>*/}
+            {/*        <Spinner/>*/}
+            {/*    </div>*/}
+            {/*)}*/}
             {/*<Link to={`/video/${videoId}`}>*/}
-                <ReactPlayer style={{width: '100%'}} loop={true} playing={true} muted controls={true} url={url} width={width} height={height}
-                             onProgress={handleProgress} onReady={() => setReady(true)} />
+                <ReactPlayer
+                    style={{width: '100%'}}
+                    loop={true}
+                    playing={true}
+                    muted
+                    controls={true}
+                    url={url}
+                    width={width}
+                    height={height}
+                    onProgress={handleProgress}
+                    onReady={() => setReady(true)}
+                />
             {/*</Link>*/}
             {/*<Box sx={{color: '#808080', position: 'absolute', bottom: '30px', left: '100px'}} className="video-item__controls" onClick={handleClick}>*/}
             {/*    {isPlaying ? <PauseIcon/> : <PlayArrowIcon/>}*/}

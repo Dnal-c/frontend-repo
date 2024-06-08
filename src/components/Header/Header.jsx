@@ -41,7 +41,7 @@ const Header = () => {
             }}>
                 <Box className="logo">
                     <Link to='/'>
-                        <img src={LOGO} alt="YAPPY" height={50}/>
+                        <img src={LOGO} alt="MAIN_LOGO" height={50}/>
                     </Link>
                 </Box>
                 {/*<Box className='menu'>*/}

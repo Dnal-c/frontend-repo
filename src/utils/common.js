@@ -1,11 +1,11 @@
 export const request = async ({path, method = 'GET', body}) => {
-    const url = `https://tiktok-video-no-watermark2.p.rapidapi.com/${path}`;
+    const url = `http://5.35.10.63:4200/${path}`;
     const options = {
         method,
-        headers: {
-            'X-RapidAPI-Key': '2059676e80mshf18cf684f3b507cp186d6cjsnb8b16d384314',
-            'X-RapidAPI-Host': 'tiktok-video-no-watermark2.p.rapidapi.com'
-        }
+        // headers: {
+        //     'X-RapidAPI-Key': '2059676e80mshf18cf684f3b507cp186d6cjsnb8b16d384314',
+        //     'X-RapidAPI-Host': 'tiktok-video-no-watermark2.p.rapidapi.com'
+        // }
     };
 
     if (body) options.body = body;

@@ -5,7 +5,7 @@ import {Alert, Box} from "@mui/material";
 import InfiniteScroll from "react-infinite-scroll-component";
 import VideoItem from "../Videos/VideoItem";
 import Spinner from "../Spinner/Spinner";
-import {dataSearchFeed as data, hasNextPage, fetchNextPage, isFetching} from "../../mocks/data";
+// import {dataSearchFeed as data, hasNextPage, fetchNextPage, isFetching} from "../../mocks/data";
 import {feedData as feed, isLoading} from "../../mocks/feed";
 import Video from "../Videos/Video";
 import {MusicNote} from "@mui/icons-material";
@@ -18,7 +18,8 @@ const SearchFeed = () => {
     const query = searchParams.get('q');
 
     // const {data, hasNextPage, fetchNextPage, isFetching, setParams} = useSearch();
-    const {setParams} = useSearch();
+    const {data, setParams} = useSearch();
+    // const {setParams} = useSearch();
     // console.log('data', data)
     // console.log('hasNextPage', hasNextPage)
     // console.log('fetchNextPage', fetchNextPage)
@@ -34,24 +35,43 @@ const SearchFeed = () => {
     console.log('isloa', isLoading)
     console.log('data', data)
     return (
-        <Box sx={{marginTop: '30px', overflow: 'auto'}}>
-            {data.map(({data: {videos}}, idx) => {
-                return !videos.length ? (
-                    <div className='error-message' key={idx}>
-                        <Alert severity='error'> Nothing for {query} </Alert>
-                    </div>
-                ) : (
+        <Box sx={{marginTop: '30px', overflow: 'auto', marginRight: '100px'}}>
+            {data.map((item, idx) => {
+                return (
                     <Fragment key={idx}>
-                        {/*<InfiniteScroll sx={{overflow: 'hidden'}} next={fetchNextPage} hasMore={hasNextPage} scrollThreshold='600px'*/}
-                        {/*                dataLength={videos.length}>*/}
-                            <Box sx={{ color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                {videos.map((video) => <VideoItem key={video.video_id} {...video} />)}
-                            </Box>
-                        {/*</InfiniteScroll>*/}
+                        <Box sx={{
+                            color: '#fff',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center'
+                        }}>
+                            <VideoItem key={item.link} {...item} />
+                        </Box>
                     </Fragment>
                 )
             })}
+            {/*{!data.length ?*/}
+            {/*    <div className='error-message'>*/}
+            {/*        <Alert severity='error'> Nothing for {query} </Alert>*/}
+            {/*    </div>*/}
+            {/*    :*/}
+            {/*})}*/}
+            {/*    data.map((item, idx) => {*/}
+            {/*    return (<Fragment key={idx}>*/}
+            {/*/!*<InfiniteScroll sx={{overflow: 'hidden'}} next={fetchNextPage} hasMore={hasNextPage} scrollThreshold='600px'*!/*/}
+            {/*/!*                dataLength={videos.length}>*!/*/}
+            {/*    <Box sx={{*/}
+            {/*    color: '#fff',*/}
+            {/*    display: 'flex',*/}
+            {/*    flexDirection: 'column',*/}
+            {/*    alignItems: 'center'*/}
+            {/*}}>*/}
+            {/*{item.map((video) => <VideoItem key={video.video_id} {...video} />)}*/}
+            {/*    </Box>*/}
+            {/*/!*</InfiniteScroll>*!/*/}
+            {/*    </Fragment>)*/}
 
+            {/*})*/}
             {/*{isFetching && <Spinner/>}*/}
         </Box>)
     // !isLoading ? (
