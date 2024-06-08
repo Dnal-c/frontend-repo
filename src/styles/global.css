@@ -1,0 +1,40 @@
+/*!*@import-normalize;*!*/
+/*!*@import url("https");*!*/
+
+/** {*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*    box-sizing: border-box;*/
+/*    font-family: "Roboto Light", sans-serif !important;*/
+/*}*/
+
+/*body {*/
+/*    background: #1b1b1f;*/
+/*    font-size: 16px;*/
+/*    line-height: 16px;*/
+/*    padding: 0;*/
+/*    margin: 0;*/
+/*    !*overflow-x: hidden;*!*/
+/*    font-weight: 400;*/
+/*    height: 100%;*/
+/*}*/
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+#root {
+    height: 100%;
+    background: #1b1b1f;
+    overflow: hidden;
+}
+
+.app {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.container {
+    margin-top: 200px;
+}
