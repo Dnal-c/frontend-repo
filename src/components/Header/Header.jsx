@@ -1,8 +1,8 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Search from "../Search/Search";
 import LOGO from "../../assets/logo-full.svg"
-import {Box, Tooltip} from "@mui/material";
+import {Box, Button, Tooltip} from "@mui/material";
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 import WhatshotOutlinedIcon from '@mui/icons-material/WhatshotOutlined';
@@ -27,14 +27,22 @@ const Header = () => {
     //         icon: <StarBorderOutlinedIcon sx={{color: '#00e5bc', cursor: 'pointer'}}/>
     //     }
     // ]
+    const navigate = useNavigate();
     return (
-        <header style={{ display: 'flex', width: '100%', borderBottomWidth: '1px', position: 'fixed', zIndex: '30', marginTop: '10px'  }}>
+        <header style={{
+            display: 'flex',
+            width: '100%',
+            borderBottomWidth: '1px',
+            position: 'fixed',
+            zIndex: '30',
+            marginTop: '10px'
+        }}>
             <Box sx={{
                 display: 'flex',
                 // paddingLeft: '1rem',
                 // paddingRight: '1rem',
                 // gap: '1.5rem',
-                // justifyContent: 'space-between',
+                justifyContent: 'space-around',
                 alignItems: 'center',
                 width: '100%',
                 marginLeft: '2%',
@@ -44,15 +52,15 @@ const Header = () => {
                         <img src={LOGO} alt="MAIN_LOGO" height={50}/>
                     </Link>
                 </Box>
-                {/*<Box className='menu'>*/}
-                {/*    {menuElements.map(({title, icon}) => (*/}
-                {/*        <Tooltip title={title}>*/}
-                {/*            {icon}*/}
-                {/*        </Tooltip>*/}
-                {/*    ))}*/}
-                {/*</Box>*/}
                 <Box sx={{width: '45%', marginLeft: '15%'}}>
                     <Search/>
+                </Box>
+                <Box>
+                    <Button variant="contained" color="success"
+                            onClick={() => {
+                                navigate('/upload')
+                            }
+                            }>Загрузить</Button>
                 </Box>
             </Box>
         </header>

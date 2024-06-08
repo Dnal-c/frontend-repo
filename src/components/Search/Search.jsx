@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useLocation, useNavigate, useMatch, useSearchParams} from 'react-router-dom'
 import SearchIcon from '@mui/icons-material/Search'
-import {Box, InputAdornment, TextField} from "@mui/material";
+import {Box, InputAdornment, NativeSelect, TextField} from "@mui/material";
 import {Clear} from "@mui/icons-material";
 
 const Search = () => {
@@ -11,7 +11,15 @@ const Search = () => {
     const query = searchParams.get('q');
     const isMatch = useMatch('search')
 
-    const [value, setValue] = useState(query);
+    const select = [
+        {label: 'основной', link: `/search?q`},
+        {label: 'mock', link: `/mockSearch?q`}
+    ]
+
+    const [selectData, setSelectData] = useState(select[0].link)
+
+    const [value, setValue] = useState(query ?? '');
+
     const handleChange = ({target: {value: val}}) => {
         setValue(val)
     }
@@ -22,12 +30,10 @@ const Search = () => {
     }, [location, isMatch])
 
     const handleSubmit = (e) => {
-        console.log('handleSubmit')
         e.preventDefault();
         const val = value.trim()
-        console.log('val', val)
         if (!val) return;
-        navigate(`/search?q=${val}`)
+        navigate(`${selectData}=${val}`)
     }
 
     const handleClickClear = () => {
@@ -61,10 +67,19 @@ const Search = () => {
                     width: '100%',
                     // fontSize: '28px'
                 }}/>
-                {/*<SearchIcon sx={{color: '#00e5bc'}}/>*/}
-                {/*<input style={{borderRadius: '100px'}} type='text' name='search' value={value} onChange={handleChange}*/}
-                {/*       placeholder='Поиск'/>*/}
             </Box>
+            <NativeSelect
+                defaultValue={select[0].label}
+                inputProps={{
+                    name: 'type',
+                    id: 'uncontrolled-native',
+                }}
+                sx={{color: '#fff'}}
+                onChange={(e) => setSelectData(e.target.value)}
+            >
+                {select.map(({label, link}) => <option key={label} value={link} onChange={(e) => console.log(e.target.value)}>{label}</option>
+                )}
+            </NativeSelect>
         </form>
     );
 };
