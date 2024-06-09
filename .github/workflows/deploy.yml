@@ -6,15 +6,14 @@ on:
 
 env:
   DOCKER_REGISTRY_REPO: "${{ vars.DOCKER_HUB_REPO }}"
-  
 
 jobs:
   deployment:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: 'Deploy'
-        uses: 'deliverybot/helm@v1'
+      - name: Helm Deploy
+        uses: vimeda/helm@v1.7.0
         with:
           release: ${{ github.event.repository.name }}
           namespace: 'default'
