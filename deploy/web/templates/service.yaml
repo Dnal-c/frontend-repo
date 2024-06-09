@@ -5,11 +5,11 @@ metadata:
   labels:
     {{- include "web.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: NodePort
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: {{ .Values.service.port }}
-      protocol: TCP
+    - port: 3000
+      targetPort: 3000
+      nodePort: 30007
       name: http
   selector:
     {{- include "web.selectorLabels" . | nindent 4 }}
