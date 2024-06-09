@@ -35,7 +35,7 @@ const SearchFeed = () => {
     console.log('isloa', isLoading)
     console.log('data', data)
     return (
-        <Box sx={{marginTop: '30px', overflow: 'auto', marginRight: '100px'}}>
+        <Box sx={{marginTop: '130px', overflow: 'auto', marginRight: '100px'}}>
             {data.map((item, idx) => {
                 return (
                     <Fragment key={idx}>

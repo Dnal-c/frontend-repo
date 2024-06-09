@@ -5,6 +5,7 @@ import SearchFeed from "./components/Search/SearchFeed";
 import User from "./components/User/User";
 import SingleVideo from "./components/Videos/SingleVideo";
 import Main from "./pages/Main/Main";
+import Upload from "./pages/Upload/Upload";
 import MockSearchFeed from "./components/Search/MockSearchFeed";
 
 const AppRoutes = () => {
@@ -16,7 +17,7 @@ const AppRoutes = () => {
             <Route path='/mockSearch' element={<MockSearchFeed/>}/>
             <Route path='/user/:uniqueId' element={<User/>}/>
             <Route path='/video/:id' element={<SingleVideo/>}/>
-            <Route path='/upload' element={<SingleVideo/>}/>
+            <Route path='/upload' element={<Upload />}/>
         </Routes>
     );
 };

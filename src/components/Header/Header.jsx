@@ -7,6 +7,7 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 import WhatshotOutlinedIcon from '@mui/icons-material/WhatshotOutlined';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
+import AddIcon from '@mui/icons-material/Add';
 
 const Header = () => {
     // const menuElements = [
@@ -56,11 +57,13 @@ const Header = () => {
                     <Search/>
                 </Box>
                 <Box>
-                    <Button variant="contained" color="success"
+                    <Button variant="contained"
                             onClick={() => {
                                 navigate('/upload')
-                            }
-                            }>Загрузить</Button>
+                            }}
+                            startIcon={<AddIcon />}
+                            sx={{background:'#00e5bc', color: 'rgba(0, 0, 0, 0.9)' }}
+                    >Загрузить</Button>
                 </Box>
             </Box>
         </header>
