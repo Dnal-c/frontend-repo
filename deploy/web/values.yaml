@@ -4,8 +4,7 @@
 
 replicaCount: 1
 
-imagePullSecrets: 
-  - name: docker-hub
+imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
