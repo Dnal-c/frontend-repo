@@ -32,7 +32,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: ${{ env.DOCKER_REGISTRY_REPO }}/${{ github.event.repository.name }}:latest
+          tags: ${{ env.DOCKER_REGISTRY_REPO }}/${{ github.event.repository.name }}:${{ steps.vars.outputs.sha_short }}
         
   deployment:
     needs: build
@@ -50,6 +50,6 @@ jobs:
               repository: ${{ env.DOCKER_REGISTRY_REPO }}/${{ github.event.repository.name }}
               pullPolicy: Always
               # Overrides the image tag whose default is the chart appVersion.
-              tag: "latest"
+              tag: "${{ needs.build.outputs.sha_short }}"
         env:
           KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'
