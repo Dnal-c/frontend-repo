@@ -21,9 +21,17 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_LOGIN }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
+          
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ github.repository }}
+          tags: |
+            type=sha,format=short,prefix=
 
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: ${{ env.DOCKER_REGISTRY_REPO }}/${{ github.event.repository.name }}:latest
+          tags: ${{ env.DOCKER_REGISTRY_REPO }}/${{ github.event.repository.name }}:${{ steps.meta.outputs.tags }}
