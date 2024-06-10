@@ -50,6 +50,6 @@ jobs:
               repository: ${{ env.DOCKER_REGISTRY_REPO }}/${{ github.event.repository.name }}
               pullPolicy: IfNotPresent
               # Overrides the image tag whose default is the chart appVersion.
-              tag: "${{ needs.build.outputs.sha_short }}"
+              tag: "docker.io/${{ needs.build.outputs.sha_short }}"
         env:
           KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'
