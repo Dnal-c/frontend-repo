@@ -4,7 +4,6 @@ import {request} from "../utils/common";
 import {useState} from "react";
 
 const getSearchFeedByKeyword = async ({keywords, cursor}) => {
-    console.log('keywords', keywords)
     const path = `videos/mock/?query=${keywords}`
     const response = await request({
         path,
@@ -22,8 +21,6 @@ export const useMockSearch = () => {
         queryFn: ({pageParam = params}) => getSearchFeedByKeyword(pageParam),
         enabled: !!params.keywords
     })
-
-    console.log('data', data)
 
     // return {params, data: data?.pages || [], isFetching, setParams, fetchNextPage, hasNextPage}
     return {params, data: data || [], setParams,}

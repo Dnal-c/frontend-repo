@@ -31,19 +31,15 @@ const SearchFeed = () => {
         setParams((__params) => ({...__params, keywords: query}));
     }, [setParams, query])
 
-    console.log('feed', feed)
-    console.log('isloa', isLoading)
-    console.log('data', data)
     return (
-        <Box sx={{marginTop: '130px', overflow: 'auto', marginRight: '100px'}}>
+        <Box sx={{margin: '130px 15% 0', overflow: 'auto'}}>
             {data.map((item, idx) => {
                 return (
                     <Fragment key={idx}>
                         <Box sx={{
                             color: '#fff',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center'
+                            width: '100%',
+                            margin: '0 auto'
                         }}>
                             <VideoItem key={item.link} {...item} />
                         </Box>

@@ -5,7 +5,7 @@ import Search from "../../components/Search/Search";
 
 const Main = () => {
     return (
-        <Box sx={{ height: '100%', display: 'grid', placeItems: 'center', alignContent: 'space-between'}}>
+        <Box sx={{ height: '100%', display: 'grid', placeItems: 'center', alignContent: 'space-between', marginTop: '7%'}}>
             <Box >
                 <img src={LOGO} alt="MAIN_LOGO" height={150} style={{ marginBottom: '50px' }} />
                 <Search />

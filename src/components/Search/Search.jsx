@@ -68,18 +68,18 @@ const Search = () => {
                     // fontSize: '28px'
                 }}/>
             </Box>
-            <NativeSelect
-                defaultValue={select[0].label}
-                inputProps={{
-                    name: 'type',
-                    id: 'uncontrolled-native',
-                }}
-                sx={{color: '#fff'}}
-                onChange={(e) => setSelectData(e.target.value)}
-            >
-                {select.map(({label, link}) => <option key={label} value={link} onChange={(e) => console.log(e.target.value)}>{label}</option>
-                )}
-            </NativeSelect>
+            {/*<NativeSelect*/}
+            {/*    defaultValue={select[0].label}*/}
+            {/*    inputProps={{*/}
+            {/*        name: 'type',*/}
+            {/*        id: 'uncontrolled-native',*/}
+            {/*    }}*/}
+            {/*    sx={{color: '#fff'}}*/}
+            {/*    onChange={(e) => setSelectData(e.target.value)}*/}
+            {/*>*/}
+            {/*    {select.map(({label, link}) => <option key={label} value={link} onChange={(e) => console.log(e.target.value)}>{label}</option>*/}
+            {/*    )}*/}
+            {/*</NativeSelect>*/}
         </form>
     );
 };

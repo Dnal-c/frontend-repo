@@ -4,12 +4,10 @@ import Video from "./Video";
 import {Box} from "@mui/material";
 
 const VideoItem = ({video_id: videoId, author, description_ru, link}) => {
-    console.log('link', link)
     return (
-        <Box sx={{display: 'grid', gridTemplateColumns: '2fr 1fr', marginBottom: '100px', columnGap: '50px'}}>
-            {/*<VideoUser {...author} />*/}
-            <Video url={link} videoId={videoId} />
-            <div className='video-title'>{description_ru}</div>
+        <Box sx={{display: 'flex', marginBottom: '100px', width: '100%', columnGap: '10%'}}>
+            <Video url={link} videoId={videoId} width='400px'/>
+            <div style={{ width: '100%'}}>{description_ru}</div>
         </Box>
     );
 };

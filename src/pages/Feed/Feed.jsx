@@ -23,7 +23,6 @@ import { Mousewheel, Pagination } from 'swiper/modules';
 
 const Feed = () => {
     // const {data: feed, isLoading} = useFeed();
-    console.log('feed', feed);
     return !isLoading ? (
         <>
             <Box sx={{ paddingTop: '100px', height: '200px' }} className="feed">

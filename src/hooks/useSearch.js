@@ -28,8 +28,6 @@ export const useSearch = () => {
         enabled: !!params.keywords
     })
 
-    // console.log('data', data)
-
     // return {params, data: data?.pages || [], isFetching, setParams, fetchNextPage, hasNextPage}
     return {params, data: data || [], setParams,}
     // return { setParams }

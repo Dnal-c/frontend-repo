@@ -19,8 +19,6 @@ const UserVideos = () => {
     //     keepPreviousData: true,
     // })
 
-    // console.log('data', data)
-    // console.log('isFetching', isFetching)
 
     useEffect(() => {
         const currentVideos = data?.data?.videos || [];

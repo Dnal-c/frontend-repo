@@ -50,7 +50,7 @@ const Header = () => {
             }}>
                 <Box className="logo">
                     <Link to='/'>
-                        <img src={LOGO} alt="MAIN_LOGO" height={50}/>
+                        <img src={LOGO} alt="MAIN_LOGO" height={30}/>
                     </Link>
                 </Box>
                 <Box sx={{width: '45%', marginLeft: '15%'}}>

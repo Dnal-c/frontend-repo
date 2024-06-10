@@ -7,6 +7,7 @@ import './styles/index.css';
 import Header from "./components/Header/Header";
 import AppRoutes from "./AppRoutes";
 import {useHistory, useLocation} from "react-router-dom";
+import {theme} from "./index";
 
 const queryClient = new QueryClient({
     defaultOptions: {
