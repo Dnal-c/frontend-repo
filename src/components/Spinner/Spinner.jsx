@@ -1,10 +1,10 @@
 import React from 'react';
-import {CircularProgress} from "@mui/material";
+import { CircularProgress } from '@mui/material';
 
 const Spinner = () => (
-    <div className="spinner flex flex-center">
-        <CircularProgress size={30}/>
-    </div>
-)
+    <di>
+        <CircularProgress size={30} />
+    </di>
+);
 
 export default Spinner;

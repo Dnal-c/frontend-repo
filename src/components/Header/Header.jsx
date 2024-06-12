@@ -33,7 +33,7 @@ const Header = () => {
                 }}
             >
                 {!mediaMobile && (
-                    <Box className="logo">
+                    <Box>
                         <Link to="/">
                             <img src={LOGO} alt="MAIN_LOGO" height={30} />
                         </Link>

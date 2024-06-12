@@ -3,6 +3,20 @@ import { createTheme } from '@mui/material';
 export const theme = createTheme({
     typography: {
         fontFamily: `'Roboto', sans-serif`,
+
+        p: {
+            fontFamily: `'Roboto', sans-serif`,
+        },
+    },
+    components: {
+        MuiDiv: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: 'red',
+                    fontFamily: "'Roboto', sans-serif",
+                },
+            },
+        },
     },
 
     palette: {

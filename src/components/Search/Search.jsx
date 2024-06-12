@@ -41,8 +41,8 @@ const Search = () => {
     };
 
     return (
-        <form className="search" onSubmit={handleSubmit}>
-            <Box className="search-input flex">
+        <form onSubmit={handleSubmit}>
+            <Box>
                 <TextField
                     value={value}
                     onChange={handleChange}
@@ -71,22 +71,9 @@ const Search = () => {
                             fontSize: '199px',
                         },
                         width: '100%',
-                        // fontSize: '28px'
                     }}
                 />
             </Box>
-            {/*<NativeSelect*/}
-            {/*    defaultValue={select[0].label}*/}
-            {/*    inputProps={{*/}
-            {/*        name: 'type',*/}
-            {/*        id: 'uncontrolled-native',*/}
-            {/*    }}*/}
-            {/*    sx={{color: '#fff'}}*/}
-            {/*    onChange={(e) => setSelectData(e.target.value)}*/}
-            {/*>*/}
-            {/*    {select.map(({label, link}) => <option key={label} value={link} onChange={(e) => console.log(e.target.value)}>{label}</option>*/}
-            {/*    )}*/}
-            {/*</NativeSelect>*/}
         </form>
     );
 };
