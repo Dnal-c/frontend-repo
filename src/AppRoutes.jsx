@@ -1,23 +1,17 @@
 import React from 'react';
-import {Route, Routes} from 'react-router-dom'
-import Feed from "./pages/Feed/Feed";
-import SearchFeed from "./components/Search/SearchFeed";
-import User from "./components/User/User";
-import SingleVideo from "./components/Videos/SingleVideo";
-import Main from "./pages/Main/Main";
-import Upload from "./pages/Upload/Upload";
-import MockSearchFeed from "./components/Search/MockSearchFeed";
+import { Route, Routes } from 'react-router-dom';
+import Feed from './pages/Feed/Feed';
+import SearchFeed from './components/Search/SearchFeed';
+import Main from './pages/Main/Main';
+import Upload from './pages/Upload/Upload';
 
 const AppRoutes = () => {
     return (
         <Routes>
-            <Route path='/' element={<Main/>}/>
-            <Route path='/feed' element={<Feed/>}/>
-            <Route path='/search' element={<SearchFeed/>}/>
-            <Route path='/mockSearch' element={<MockSearchFeed/>}/>
-            <Route path='/user/:uniqueId' element={<User/>}/>
-            <Route path='/video/:id' element={<SingleVideo/>}/>
-            <Route path='/upload' element={<Upload />}/>
+            <Route path="/" element={<Main />} />
+            <Route path="/feed" element={<Feed />} />
+            <Route path="/search" element={<SearchFeed />} />
+            <Route path="/upload" element={<Upload />} />
         </Routes>
     );
 };

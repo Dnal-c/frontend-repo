@@ -1,24 +1,26 @@
-import React, {Fragment, useEffect} from 'react';
-import {Link, useSearchParams} from "react-router-dom";
-import {useSearch} from "../../hooks/useSearch";
-import {Alert, Box} from "@mui/material";
-import InfiniteScroll from "react-infinite-scroll-component";
-import VideoItem from "../Videos/VideoItem";
-import Spinner from "../Spinner/Spinner";
+import React, { Fragment, useEffect, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { useSearch } from '../../hooks/useSearch';
+import { Alert, Box } from '@mui/material';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import VideoItem from '../Videos/VideoItem';
+import Spinner from '../Spinner/Spinner';
 // import {dataSearchFeed as data, hasNextPage, fetchNextPage, isFetching} from "../../mocks/data";
-import {feedData as feed, isLoading} from "../../mocks/feed";
-import Video from "../Videos/Video";
-import {MusicNote} from "@mui/icons-material";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import {formatCompactNum} from "../../utils/common";
-import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
+import { feedData as feed, isLoading } from '../../mocks/feed';
+import Video from '../Videos/Video';
+import { MusicNote } from '@mui/icons-material';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { formatCompactNum } from '../../utils/common';
+import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
+import { getSearchFeed } from '../../api/searchFeed';
 
 const SearchFeed = () => {
-    const [searchParams] = useSearchParams()
+    const [searchParams] = useSearchParams();
     const query = searchParams.get('q');
+    const [data, setData] = useState([]);
 
     // const {data, hasNextPage, fetchNextPage, isFetching, setParams} = useSearch();
-    const {data, setParams} = useSearch();
+    // const { data, setParams } = useSearch();
     // const {setParams} = useSearch();
     // console.log('data', data)
     // console.log('hasNextPage', hasNextPage)
@@ -26,25 +28,30 @@ const SearchFeed = () => {
     // console.log('isFetching', isFetching)
     // console.log('setParams', setParams)
 
+    // useEffect(() => {
+    //     setParams((__params) => ({ ...__params, keywords: query }));
+    // }, [setParams, query]);
 
     useEffect(() => {
-        setParams((__params) => ({...__params, keywords: query}));
-    }, [setParams, query])
+        getSearchFeed(query).then((result) => setData(result));
+    }, [query]);
 
     return (
-        <Box sx={{margin: '130px 15% 0', overflow: 'auto'}}>
+        <Box sx={{ margin: '130px 15% 0', overflow: 'auto' }}>
             {data.map((item, idx) => {
                 return (
                     <Fragment key={idx}>
-                        <Box sx={{
-                            color: '#fff',
-                            width: '100%',
-                            margin: '0 auto'
-                        }}>
+                        <Box
+                            sx={{
+                                color: '#fff',
+                                width: '100%',
+                                margin: '0 auto',
+                            }}
+                        >
                             <VideoItem key={item.link} {...item} />
                         </Box>
                     </Fragment>
-                )
+                );
             })}
             {/*{!data.length ?*/}
             {/*    <div className='error-message'>*/}
@@ -69,7 +76,8 @@ const SearchFeed = () => {
 
             {/*})*/}
             {/*{isFetching && <Spinner/>}*/}
-        </Box>)
+        </Box>
+    );
     // !isLoading ? (
     //     <>
     //         <Box sx={{paddingTop: '100px', height: '200px'}} className="feed">
@@ -160,6 +168,5 @@ const SearchFeed = () => {
     //     <Spinner/>
     // );
 };
-
 
 export default SearchFeed;
