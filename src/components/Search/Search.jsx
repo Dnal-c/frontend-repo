@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useMatch, useSearchParams } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
-import { Autocomplete, Box, InputAdornment, TextField } from '@mui/material';
+import { Autocomplete, Box, InputAdornment, TextField, createFilterOptions } from '@mui/material';
 import { getAutocomplete } from '../../api/searchFeed';
 import useDebounce from '../../hooks/useDebounce';
 
@@ -41,7 +41,7 @@ const Search = () => {
 
     const renderOption = (props, option) => {
         return (
-            <li {...props} key={props.key}>
+            <li {...props} key={option}>
                 <Box>{option}</Box>
             </li>
         );
@@ -55,6 +55,7 @@ const Search = () => {
                     options={optionsAutocomplete}
                     value={value}
                     renderOption={renderOption}
+                    getOptionLabel={() => value}
                     onChange={(e) => setValue(e.target.innerText)}
                     renderInput={(params) => (
                         <TextField
