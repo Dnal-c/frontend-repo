@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useMatch, useSearchParams } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {useLocation, useNavigate, useMatch, useSearchParams} from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
-import { Box, InputAdornment, NativeSelect, TextField } from '@mui/material';
-import { Clear } from '@mui/icons-material';
+import {Autocomplete, Box, InputAdornment, TextField} from '@mui/material';
+import {getAutocomplete} from '../../api/searchFeed';
+import useDebounce from '../../hooks/useDebounce';
 
 const Search = () => {
     const navigate = useNavigate();
@@ -10,17 +11,19 @@ const Search = () => {
     const [searchParams] = useSearchParams();
     const query = searchParams.get('q');
     const isMatch = useMatch('search');
-
-    const select = [
-        { label: 'основной', link: `/search?q` },
-        { label: 'mock', link: `/mockSearch?q` },
-    ];
-
-    const [selectData, setSelectData] = useState(select[0].link);
+    const [optionsAutocomplete, setOptionsAutocomplete] = useState([]);
 
     const [value, setValue] = useState(query ?? '');
 
-    const handleChange = ({ target: { value: val } }) => {
+    const debouncedValue = useDebounce(value, 300);
+
+    useEffect(() => {
+        if (debouncedValue) {
+            getAutocomplete(value.trim()).then((res) => setOptionsAutocomplete(res));
+        }
+    }, [debouncedValue]);
+
+    const handleChange = ({target: {value: val}}) => {
         setValue(val);
     };
 
@@ -33,7 +36,7 @@ const Search = () => {
         e.preventDefault();
         const val = value.trim();
         if (!val) return;
-        navigate(`${selectData}=${val}`);
+        navigate(`/search?q=${val}`);
     };
 
     const handleClickClear = () => {
@@ -43,35 +46,40 @@ const Search = () => {
     return (
         <form onSubmit={handleSubmit}>
             <Box>
-                <TextField
+                <Autocomplete
+                    freeSolo
+                    options={optionsAutocomplete}
                     value={value}
-                    onChange={handleChange}
-                    variant="outlined"
-                    placeholder="Поиск"
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <SearchIcon sx={{ color: '#00e5bc' }} />
-                            </InputAdornment>
-                        ),
-                        endAdornment: (
-                            <InputAdornment onClick={handleClickClear} sx={{ cursor: 'pointer' }} position="start">
-                                <Clear sx={{ color: '#00e5bc' }} />
-                            </InputAdornment>
-                        ),
-                    }}
-                    sx={{
-                        input: { color: '#fff', fontSize: '20px' },
-                        backgroundColor: '#25252C',
-                        borderRadius: '12px',
-                        '& .MuiOutlinedInput-notchedOutline': {
-                            border: 'none',
-                        },
-                        '& .MuiFormLabel-root': {
-                            fontSize: '199px',
-                        },
-                        width: '100%',
-                    }}
+                    onChange={(e) => setValue(e.target.innerText)}
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            value={value}
+                            onChange={handleChange}
+                            variant="outlined"
+                            placeholder="Поиск"
+                            InputProps={{
+                                ...params.InputProps,
+                                startAdornment: (
+                                    <InputAdornment position="start" onClick={handleSubmit}>
+                                        <SearchIcon sx={{color: '#00e5bc', cursor: 'pointer'}}/>
+                                    </InputAdornment>
+                                ),
+                            }}
+                            sx={{
+                                input: {color: '#fff', fontSize: '20px'},
+                                backgroundColor: '#25252C',
+                                borderRadius: '12px',
+                                '& .MuiOutlinedInput-notchedOutline': {
+                                    border: 'none',
+                                },
+                                '& .MuiAutocomplete-endAdornment .MuiSvgIcon-root': {
+                                    color: '#00e5bc',
+                                },
+                                width: '100%',
+                            }}
+                        />
+                    )}
                 />
             </Box>
         </form>
