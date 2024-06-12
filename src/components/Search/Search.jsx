@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {useLocation, useNavigate, useMatch, useSearchParams} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate, useMatch, useSearchParams } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
-import {Autocomplete, Box, InputAdornment, TextField} from '@mui/material';
-import {getAutocomplete} from '../../api/searchFeed';
+import { Autocomplete, Box, InputAdornment, TextField } from '@mui/material';
+import { getAutocomplete } from '../../api/searchFeed';
 import useDebounce from '../../hooks/useDebounce';
 
 const Search = () => {
@@ -23,7 +23,7 @@ const Search = () => {
         }
     }, [debouncedValue]);
 
-    const handleChange = ({target: {value: val}}) => {
+    const handleChange = ({ target: { value: val } }) => {
         setValue(val);
     };
 
@@ -39,8 +39,12 @@ const Search = () => {
         navigate(`/search?q=${val}`);
     };
 
-    const handleClickClear = () => {
-        setValue('');
+    const renderOption = (props, option) => {
+        return (
+            <li {...props} key={props.key}>
+                <Box>{option}</Box>
+            </li>
+        );
     };
 
     return (
@@ -50,10 +54,12 @@ const Search = () => {
                     freeSolo
                     options={optionsAutocomplete}
                     value={value}
+                    renderOption={renderOption}
                     onChange={(e) => setValue(e.target.innerText)}
                     renderInput={(params) => (
                         <TextField
                             {...params}
+                            autoFocus
                             value={value}
                             onChange={handleChange}
                             variant="outlined"
@@ -62,12 +68,12 @@ const Search = () => {
                                 ...params.InputProps,
                                 startAdornment: (
                                     <InputAdornment position="start" onClick={handleSubmit}>
-                                        <SearchIcon sx={{color: '#00e5bc', cursor: 'pointer'}}/>
+                                        <SearchIcon sx={{ color: '#00e5bc', cursor: 'pointer' }} />
                                     </InputAdornment>
                                 ),
                             }}
                             sx={{
-                                input: {color: '#fff', fontSize: '20px'},
+                                input: { color: '#fff', fontSize: '20px' },
                                 backgroundColor: '#25252C',
                                 borderRadius: '12px',
                                 '& .MuiOutlinedInput-notchedOutline': {
