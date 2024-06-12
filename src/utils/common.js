@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = `http://video-service.default.svc.cluster.local:4200/`;
+const BASE_URL = `http://87.242.93.110/video-service/`;
 
 export const $api = axios.create({
     withCredentials: false,
