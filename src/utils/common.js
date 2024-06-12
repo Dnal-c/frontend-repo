@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = `http://5.35.10.63:4200/`;
+const BASE_URL = `http://178.170.242.192:30042/`;
 
 export const $api = axios.create({
     withCredentials: false,
