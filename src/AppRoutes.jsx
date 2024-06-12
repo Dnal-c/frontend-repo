@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Feed from './pages/Feed/Feed';
-import SearchFeed from './components/Search/SearchFeed';
+import SearchFeed from './pages/SeacrhFeed/SearchFeed';
 import Main from './pages/Main/Main';
 import Upload from './pages/Upload/Upload';
 
