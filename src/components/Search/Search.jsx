@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useLocation, useNavigate, useMatch, useSearchParams } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import { Autocomplete, Box, InputAdornment, TextField, createFilterOptions } from '@mui/material';
@@ -32,11 +32,14 @@ const Search = () => {
         setValue('');
     }, [location, isMatch]);
 
+    const ref = useRef();
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const val = value.trim();
         if (!val) return;
         navigate(`/search?q=${val}`);
+        setOptionsAutocomplete([]);
     };
 
     const renderOption = (props, option) => {
