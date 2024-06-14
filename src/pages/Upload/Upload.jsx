@@ -6,7 +6,12 @@ import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import Video from '../../components/Videos/Video';
+import Spinner from '../../components/Spinner/Spinner';
 import { theme } from '../../utils/theme';
+import { postPredictByFile, postPredictByLink } from '../../api/upload';
+import SuccessUpload from '../../components/SuccessUpload/SuccessUpload';
+import ErrorUpload from '../../components/ErrorUpload/ErrorUpload';
+import { hasMp4Extension } from '../../utils/util';
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -21,11 +26,16 @@ const VisuallyHiddenInput = styled('input')({
 });
 const Upload = () => {
     const [dragActive, setDragActive] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [file, setFile] = useState();
     const [imageUrl, setImageUrl] = useState();
     const [linkText, setLinkText] = useState('');
     const [descriptionText, setDescriptionText] = useState('');
     const [isLinkDownload, setIsLinkDownload] = useState(false);
+    const [isOpenSuccessUpload, setIsOpenSuccessUpload] = useState(false);
+    const [isOpenErrorUpload, setIsOpenErrorUpload] = useState(false);
+    const [isOpenErrorFile, setIsOpenErrorFile] = useState(false);
+    const [successResult, setSuccessResult] = useState();
     const fileReader = new FileReader();
 
     useLayoutEffect(() => {
@@ -36,10 +46,17 @@ const Upload = () => {
 
     const handleChange = (e) => {
         e.preventDefault();
+
         const file = e.target.files[0];
+        if (!hasMp4Extension(file.name)) {
+            setIsOpenErrorFile(true);
+            return;
+        }
         fileReader.readAsDataURL(file);
+        console.log('file', file);
         setFile(file);
     };
+    console.log('fileReader', fileReader);
 
     const handleDrag = (e) => {
         e.preventDefault();
@@ -55,7 +72,13 @@ const Upload = () => {
         e.preventDefault();
         setDragActive(false);
         const file = e.dataTransfer.files[0];
+        if (!hasMp4Extension(file.name)) {
+            setIsOpenErrorFile(true);
+            return;
+        }
         fileReader.readAsDataURL(file);
+        console.log('fileReader', fileReader);
+        console.log('file', file);
         setFile(file);
     };
 
@@ -63,166 +86,263 @@ const Upload = () => {
         setFile(null);
     };
 
+    const handleSend = async () => {
+        setIsLoading(true);
+        const formData = new FormData();
+        console.log('file', file);
+        formData.append('description', JSON.stringify(descriptionText));
+
+        if (isLinkDownload) {
+            const params = {
+                description: descriptionText,
+                link: linkText.trim(),
+            };
+            try {
+                const res = await postPredictByLink(params);
+                setSuccessResult(res.data);
+                setIsOpenSuccessUpload(true);
+            } catch (e) {
+                setIsOpenErrorUpload(true);
+            }
+        } else {
+            formData.append('file_data', file);
+            try {
+                const res = await postPredictByFile(formData);
+                setSuccessResult(res.data);
+                setIsOpenSuccessUpload(true);
+            } catch (e) {
+                setIsOpenErrorUpload(true);
+            }
+        }
+
+        setIsLoading(false);
+        setLinkText('');
+        setDescriptionText('');
+        setFile();
+        setIsLinkDownload(false);
+    };
+
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', marginTop: '100px', width: '100%' }}>
-            <Box sx={{ color: '#fff' }}>
-                <h2 style={{ fontFamily: 'Roboto, sans-serif' }}>Новая публикация</h2>
-            </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: '15%', width: '100%', justifyContent: 'center' }}>
-                {!file ? (
+        <>
+            {!isLoading ? (
+                <Box
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        flexDirection: 'column',
+                        marginTop: '100px',
+                        width: '100%',
+                    }}
+                >
+                    <Box sx={{ color: '#fff' }}>
+                        <h2 style={{ fontFamily: 'Roboto, sans-serif' }}>Новая публикация</h2>
+                    </Box>
                     <Box
-                        onDragEnter={(event) => {
-                            !isLinkDownload && handleDrag(event);
-                        }}
-                        onDragOver={(event) => {
-                            !isLinkDownload && handleDrag(event);
-                        }}
-                        onDragLeave={(event) => {
-                            !isLinkDownload && handleLeave(event);
-                        }}
-                        onDrop={(event) => {
-                            !isLinkDownload && handleDrop(event);
-                        }}
                         sx={{
-                            width: '20vw',
-                            minHeight: '65vh',
-                            border: dragActive
-                                ? '2px dashed #00e5bc'
-                                : isLinkDownload
-                                ? '2px dashed #a4a4a4'
-                                : '2px dashed #fff',
-                            borderRadius: '16px',
-                            '&:hover': {
-                                border: isLinkDownload ? '2px dashed #a4a4a4' : '2px dashed #00e5bc',
-                            },
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '15%',
+                            width: '100%',
+                            justifyContent: 'center',
                         }}
                     >
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                color: '#fff',
-                                marginTop: !isLinkDownload ? '1vh' : '25vh',
-                                textAlign: 'center',
-                            }}
-                        >
-                            {isLinkDownload ? (
-                                <Box>Можно загрузить либо через ссылку, либо выбрав файл</Box>
-                            ) : (
-                                <>
-                                    <FileUploadOutlinedIcon
-                                        sx={{ width: '50px', height: '50px', color: '#a4a4a4', marginTop: '5vh' }}
+                        {!file ? (
+                            <Box
+                                onDragEnter={(event) => {
+                                    !isLinkDownload && handleDrag(event);
+                                }}
+                                onDragOver={(event) => {
+                                    !isLinkDownload && handleDrag(event);
+                                }}
+                                onDragLeave={(event) => {
+                                    !isLinkDownload && handleLeave(event);
+                                }}
+                                onDrop={(event) => {
+                                    !isLinkDownload && handleDrop(event);
+                                }}
+                                sx={{
+                                    width: '20vw',
+                                    minHeight: '65vh',
+                                    border: dragActive
+                                        ? '2px dashed #00e5bc'
+                                        : isLinkDownload
+                                        ? '2px dashed #a4a4a4'
+                                        : '2px dashed #fff',
+                                    borderRadius: '16px',
+                                    '&:hover': {
+                                        border: isLinkDownload ? '2px dashed #a4a4a4' : '2px dashed #00e5bc',
+                                    },
+                                }}
+                            >
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                        color: '#fff',
+                                        marginTop: !isLinkDownload ? '1vh' : '25vh',
+                                        textAlign: 'center',
+                                    }}
+                                >
+                                    {isLinkDownload ? (
+                                        <Box>Можно загрузить либо через ссылку, либо выбрав файл</Box>
+                                    ) : (
+                                        <>
+                                            <FileUploadOutlinedIcon
+                                                sx={{
+                                                    width: '50px',
+                                                    height: '50px',
+                                                    color: '#a4a4a4',
+                                                    marginTop: '5vh',
+                                                }}
+                                            />
+                                            <Box sx={{ marginTop: '1%', fontFamily: `'Roboto', sans-serif` }}>
+                                                Выберите или перетащите видео для загрузки
+                                            </Box>
+                                            <Box
+                                                sx={{
+                                                    display: 'flex',
+                                                    flexDirection: 'column',
+                                                    alignItems: 'center',
+                                                    color: '#a4a4a4',
+                                                    fontSize: '12px',
+                                                    marginTop: '5vh',
+                                                }}
+                                            >
+                                                <Box sx={{ margin: 0, fontFamily: `'Roboto', sans-serif` }}>
+                                                    Формат MP4
+                                                </Box>
+                                                <Box sx={{ margin: 0, fontFamily: `'Roboto', sans-serif` }}>
+                                                    Продолжительность видео от 3 до 60 секунд
+                                                </Box>
+                                                <Box sx={{ margin: 0, fontFamily: `'Roboto', sans-serif` }}>
+                                                    Размер менее 50МБ
+                                                </Box>
+                                            </Box>
+                                            <Button
+                                                component="label"
+                                                role={undefined}
+                                                variant="contained"
+                                                sx={{
+                                                    background: '#00e5bc',
+                                                    color: 'rgba(0, 0, 0, 0.9)',
+                                                    marginTop: '10vh',
+                                                }}
+                                                disabled={isLinkDownload}
+                                            >
+                                                Выберите файл
+                                                <VisuallyHiddenInput
+                                                    type="file"
+                                                    onChange={handleChange}
+                                                    accept="video/mp4,video/x-m4v,video/*"
+                                                />
+                                            </Button>
+                                        </>
+                                    )}
+                                </Box>
+                            </Box>
+                        ) : (
+                            <Box sx={{ position: 'relative' }}>
+                                <Video url={imageUrl} height={'60vh'} width={'100%'} />
+                                <DeleteIcon
+                                    onClick={handleDeleteVideo}
+                                    sx={{
+                                        position: 'absolute',
+                                        top: '1%',
+                                        right: '2%',
+                                        cursor: 'pointer',
+                                        color: '#fff',
+                                    }}
+                                />
+                            </Box>
+                        )}
+                        <Box sx={{ color: '#fff', display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                            <TextField
+                                variant="standard"
+                                placeholder="Добавь описание"
+                                value={descriptionText}
+                                onChange={(e) => setDescriptionText(e.target.value)}
+                                sx={{
+                                    input: { color: '#fff' },
+                                    '& .MuiInput-underline:before': { borderBottomColor: '#a4a4a4' },
+                                }}
+                            />
+                            {!file && (
+                                <FormGroup>
+                                    <FormControlLabel
+                                        control={
+                                            <Switch
+                                                value={isLinkDownload}
+                                                onChange={(e) => {
+                                                    setIsLinkDownload(e.target.checked);
+                                                    setLinkText('');
+                                                }}
+                                            />
+                                        }
+                                        label="Загрузить с помощью ссылки?"
                                     />
-                                    <Box sx={{ marginTop: '1%', fontFamily: `'Roboto', sans-serif` }}>
-                                        Выберите или перетащите видео для загрузки
-                                    </Box>
-                                    <Box
-                                        sx={{
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            alignItems: 'center',
-                                            color: '#a4a4a4',
-                                            fontSize: '12px',
-                                            marginTop: '5vh',
-                                        }}
-                                    >
-                                        <Box sx={{ margin: 0, fontFamily: `'Roboto', sans-serif` }}>Формат MP4</Box>
-                                        <Box sx={{ margin: 0, fontFamily: `'Roboto', sans-serif` }}>
-                                            Продолжительность видео от 3 до 60 секунд
-                                        </Box>
-                                        <Box sx={{ margin: 0, fontFamily: `'Roboto', sans-serif` }}>
-                                            Размер менее 250МБ
-                                        </Box>
-                                    </Box>
-                                    <Button
-                                        component="label"
-                                        role={undefined}
-                                        variant="contained"
-                                        sx={{ background: '#00e5bc', color: 'rgba(0, 0, 0, 0.9)', marginTop: '10vh' }}
-                                        disabled={isLinkDownload}
-                                    >
-                                        Выберите файл
-                                        <VisuallyHiddenInput
-                                            type="file"
-                                            onChange={handleChange}
-                                            accept="video/mp4,video/x-m4v,video/*"
-                                        />
-                                    </Button>
-                                </>
+                                </FormGroup>
                             )}
+
+                            {isLinkDownload && (
+                                <TextField
+                                    variant="standard"
+                                    placeholder="Добавь ссылку"
+                                    value={linkText}
+                                    onChange={(e) => setLinkText(e.target.value)}
+                                    sx={{
+                                        input: { color: '#fff' },
+                                        '& .MuiInput-underline:before': { borderBottomColor: '#a4a4a4' },
+                                    }}
+                                />
+                            )}
+
+                            <Button
+                                variant="contained"
+                                sx={{
+                                    background: '#00e5bc',
+                                    color: 'rgba(0, 0, 0, 0.9)',
+                                    marginTop: '40px',
+                                    '&:disabled': {
+                                        background: '#a4a4a4',
+                                    },
+                                }}
+                                disabled={!file && !linkText}
+                                onClick={handleSend}
+                            >
+                                Опубликовать
+                            </Button>
                         </Box>
                     </Box>
-                ) : (
-                    <Box sx={{ position: 'relative' }}>
-                        <Video url={imageUrl} height={'60vh'} width={'100%'} />
-                        <DeleteIcon
-                            onClick={handleDeleteVideo}
-                            sx={{
-                                position: 'absolute',
-                                top: '1%',
-                                right: '2%',
-                                cursor: 'pointer',
-                                color: '#fff',
-                            }}
-                        />
-                    </Box>
-                )}
-                <Box sx={{ color: '#fff', display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                    <TextField
-                        variant="standard"
-                        placeholder="Добавь описание"
-                        value={descriptionText}
-                        onChange={(e) => setDescriptionText(e.target.value)}
-                        sx={{
-                            input: { color: '#fff' },
-                            '& .MuiInput-underline:before': { borderBottomColor: '#a4a4a4' },
-                        }}
-                    />
-                    {!file && (
-                        <FormGroup>
-                            <FormControlLabel
-                                control={
-                                    <Switch
-                                        value={isLinkDownload}
-                                        onChange={(e) => setIsLinkDownload(e.target.checked)}
-                                    />
-                                }
-                                label="Загрузить с помощью ссылки?"
-                            />
-                        </FormGroup>
-                    )}
-
-                    {isLinkDownload && (
-                        <TextField
-                            variant="standard"
-                            placeholder="Добавь ссылку"
-                            value={linkText}
-                            onChange={(e) => setLinkText(e.target.value)}
-                            sx={{
-                                input: { color: '#fff' },
-                                '& .MuiInput-underline:before': { borderBottomColor: '#a4a4a4' },
-                            }}
-                        />
-                    )}
-
-                    <Button
-                        variant="contained"
-                        sx={{
-                            background: '#00e5bc',
-                            color: 'rgba(0, 0, 0, 0.9)',
-                            marginTop: '40px',
-                            '&:disabled': {
-                                background: '#a4a4a4',
-                            },
-                        }}
-                        disabled={!file && !linkText}
-                    >
-                        Опубликовать
-                    </Button>
                 </Box>
-            </Box>
-        </Box>
+            ) : (
+                <Spinner css={{ marginTop: '50vh', marginLeft: '50%' }} />
+            )}
+            {isOpenSuccessUpload && (
+                <SuccessUpload
+                    open={isOpenSuccessUpload}
+                    handleClose={() => {
+                        setIsOpenSuccessUpload(false);
+                        setSuccessResult();
+                    }}
+                    result={successResult}
+                />
+            )}
+            {isOpenErrorUpload && (
+                <ErrorUpload
+                    open={isOpenErrorUpload}
+                    handleClose={() => setIsOpenErrorUpload(false)}
+                    text="Может быть что-то с сервером"
+                />
+            )}
+            {isOpenErrorFile && (
+                <ErrorUpload
+                    open={isOpenErrorFile}
+                    handleClose={() => setIsOpenErrorFile(false)}
+                    text="Твое видео не проходит по параметрам для загрузки. Формат должен быть mp4/или ты загружаешь файл больше 50Мб"
+                />
+            )}
+        </>
     );
 };
 

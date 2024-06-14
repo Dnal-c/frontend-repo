@@ -1,9 +1,17 @@
 import axios from 'axios';
 
-const BASE_URL = `http://178.170.242.192:30042/`;
+const SEARCH_URL = `http://178.170.242.192:30042/`;
+const UPLOAD_URL = `http://178.170.242.192:30043/`;
 
-export const $api = axios.create({
+export const $searchApi = axios.create({
     withCredentials: false,
-    baseURL: BASE_URL,
+    baseURL: SEARCH_URL,
     insecureHTTPParser: true,
 });
+
+export const $uploadApi = axios.create({
+    withCredentials: false,
+    baseURL: UPLOAD_URL,
+    insecureHTTPParser: true,
+});
+

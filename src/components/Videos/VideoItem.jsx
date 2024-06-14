@@ -27,6 +27,8 @@ const VideoItem = ({ video_id: videoId, author, description_ru, link }) => {
             <Box
                 sx={{
                     width: '100%',
+                    fontFamily: 'Roboto',
+                    // fontStyle: 'normal',
                     [theme.breakpoints.down('md')]: {
                         position: 'absolute',
                         bottom: '10%',
