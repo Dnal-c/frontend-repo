@@ -41,7 +41,7 @@ const Main = () => {
                         widthInput={{
                             width: '90%',
                             [theme.breakpoints.down('sm')]: {
-                                width: '75%',
+                                width: '80%',
                             },
                         }}
                         сssIcon={{
@@ -57,7 +57,7 @@ const Main = () => {
                             padding: '19px',
                             width: '6%',
                             [theme.breakpoints.down('sm')]: {
-                                left: '75%',
+                                left: '80%',
                             },
                         }}
                     />
