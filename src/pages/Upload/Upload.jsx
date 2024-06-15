@@ -11,6 +11,7 @@ import { postPredictByFile, postPredictByLink } from '../../api/upload';
 import SuccessUpload from '../../components/SuccessUpload/SuccessUpload';
 import ErrorUpload from '../../components/ErrorUpload/ErrorUpload';
 import { hasMp4Extension } from '../../utils/util';
+import { theme } from '../../utils/theme';
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -52,10 +53,8 @@ const Upload = () => {
             return;
         }
         fileReader.readAsDataURL(file);
-        console.log('file', file);
         setFile(file);
     };
-    console.log('fileReader', fileReader);
 
     const handleDrag = (e) => {
         e.preventDefault();
@@ -76,8 +75,6 @@ const Upload = () => {
             return;
         }
         fileReader.readAsDataURL(file);
-        console.log('fileReader', fileReader);
-        console.log('file', file);
         setFile(file);
     };
 
@@ -88,8 +85,7 @@ const Upload = () => {
     const handleSend = async () => {
         setIsLoading(true);
         const formData = new FormData();
-        console.log('file', file);
-        formData.append('description', JSON.stringify(descriptionText));
+        formData.append('description', descriptionText);
 
         if (isLinkDownload) {
             const params = {
@@ -131,6 +127,11 @@ const Upload = () => {
                         flexDirection: 'column',
                         marginTop: '100px',
                         width: '100%',
+                        [theme.breakpoints.down('md')]: {
+                            margin: '80px 2%',
+                            width: '90%',
+                            // marginRight: '2%',
+                        },
                     }}
                 >
                     <Box sx={{ color: '#fff' }}>
@@ -161,7 +162,7 @@ const Upload = () => {
                                 }}
                                 sx={{
                                     width: '20vw',
-                                    minHeight: '65vh',
+                                    height: '65vh',
                                     border: dragActive
                                         ? '2px dashed #00e5bc'
                                         : isLinkDownload
@@ -170,6 +171,10 @@ const Upload = () => {
                                     borderRadius: '16px',
                                     '&:hover': {
                                         border: isLinkDownload ? '2px dashed #a4a4a4' : '2px dashed #00e5bc',
+                                    },
+                                    [theme.breakpoints.down('md')]: {
+                                        height: '60vh',
+                                        width: '30vw',
                                     },
                                 }}
                             >
@@ -193,9 +198,22 @@ const Upload = () => {
                                                     height: '50px',
                                                     color: '#a4a4a4',
                                                     marginTop: '5vh',
+                                                    [theme.breakpoints.down('md')]: {
+                                                        marginTop: '1vh',
+                                                        width: '25px',
+                                                        height: '25px',
+                                                    },
                                                 }}
                                             />
-                                            <Box sx={{ marginTop: '1%', fontFamily: `'Roboto', sans-serif` }}>
+                                            <Box
+                                                sx={{
+                                                    marginTop: '1%',
+                                                    fontFamily: `'Roboto', sans-serif`,
+                                                    [theme.breakpoints.down('md')]: {
+                                                        fontSize: '0.75rem',
+                                                    },
+                                                }}
+                                            >
                                                 Выберите или перетащите видео для загрузки
                                             </Box>
                                             <Box
@@ -206,6 +224,10 @@ const Upload = () => {
                                                     color: '#a4a4a4',
                                                     fontSize: '12px',
                                                     marginTop: '5vh',
+                                                    [theme.breakpoints.down('md')]: {
+                                                        fontSize: '0.55rem',
+                                                        marginTop: '6vh',
+                                                    },
                                                 }}
                                             >
                                                 <Box sx={{ margin: 0, fontFamily: `'Roboto', sans-serif` }}>
@@ -226,6 +248,10 @@ const Upload = () => {
                                                     background: '#00e5bc',
                                                     color: 'rgba(0, 0, 0, 0.9)',
                                                     marginTop: '10vh',
+                                                    [theme.breakpoints.down('md')]: {
+                                                        // marginTop: 'vh',
+                                                        fontSize: '0.65rem',
+                                                    },
                                                 }}
                                                 disabled={isLinkDownload}
                                             >
@@ -264,6 +290,9 @@ const Upload = () => {
                                 sx={{
                                     input: { color: '#fff' },
                                     '& .MuiInput-underline:before': { borderBottomColor: '#a4a4a4' },
+                                    [theme.breakpoints.down('md')]: {
+                                        marginTop: '10px',
+                                    },
                                 }}
                             />
                             {!file && (

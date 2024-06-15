@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
-import { Box } from '@mui/material';
+import { Box, useMediaQuery } from '@mui/material';
 import { useInView } from 'react-intersection-observer';
+import { theme } from '../../utils/theme';
 
 const Video = ({ url = '', width = '100%', height = '360px' }) => {
+    const mediaBig = useMediaQuery(theme.breakpoints.up('lg'));
     const { ref, inView } = useInView({
-        threshold: 0.5,
+        threshold: !mediaBig ? 0.5 : 0.8,
     });
 
     return (

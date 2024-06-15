@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useLocation, useNavigate, useMatch, useSearchParams } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
-import { Autocomplete, Box, InputAdornment, TextField } from '@mui/material';
+import { Autocomplete, Box, InputAdornment, TextField, useMediaQuery } from '@mui/material';
 import { getAutocomplete } from '../../api/searchFeed';
 import useDebounce from '../../hooks/useDebounce';
+import { theme } from '../../utils/theme';
 
 const Search = ({ сssIcon, widthInput }) => {
+    const mediaMobile = useMediaQuery(theme.breakpoints.down('md'));
     const navigate = useNavigate();
     const location = useLocation();
     const [searchParams] = useSearchParams();
@@ -63,7 +65,7 @@ const Search = ({ сssIcon, widthInput }) => {
                     renderInput={(params) => (
                         <TextField
                             {...params}
-                            autoFocus
+                            autoFocus={!mediaMobile}
                             value={value}
                             onChange={handleChange}
                             variant="outlined"
