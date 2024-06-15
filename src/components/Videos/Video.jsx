@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import ReactPlayer from 'react-player';
 import { Box } from '@mui/material';
 import { useInView } from 'react-intersection-observer';

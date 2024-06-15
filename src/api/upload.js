@@ -1,4 +1,4 @@
-import { $uploadApi } from './../utils/common';
+import { $uploadApi } from '../utils/common';
 
 export async function postPredictByFile(params) {
     const res = await $uploadApi.post('api/v1/calculate-predict-by-file', params);

@@ -37,7 +37,30 @@ const Main = () => {
                         height={!mediaMobile ? 150 : 100}
                         style={{ marginBottom: '50px' }}
                     />
-                    <Search />
+                    <Search
+                        widthInput={{
+                            width: '90%',
+                            [theme.breakpoints.down('sm')]: {
+                                width: '75%',
+                            },
+                        }}
+                        сssIcon={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            position: 'absolute',
+                            backgroundColor: '#33333a',
+                            top: '0px',
+                            left: '90%',
+                            borderRadius: '0 40px 40px 0',
+                            border: '1px solid black',
+                            padding: '19px',
+                            width: '6%',
+                            [theme.breakpoints.down('sm')]: {
+                                left: '75%',
+                            },
+                        }}
+                    />
                 </Box>
                 <Button
                     variant="contained"

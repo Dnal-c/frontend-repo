@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Search from '../Search/Search';
 import LOGO from '../../assets/logo-full.svg';
-import { Box, Button, Tooltip, useMediaQuery, IconButton } from '@mui/material';
+import { Box, Button, useMediaQuery, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { theme } from '../../utils/theme';
 
@@ -44,11 +44,35 @@ const Header = () => {
                         width: '63%',
                         marginLeft: '1%',
                         [theme.breakpoints.down('md')]: {
-                            width: '90%',
+                            width: '85%',
+                            marginRight: '1%',
                         },
                     }}
                 >
-                    <Search />
+                    <Search
+                        сssIcon={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            position: 'absolute',
+                            backgroundColor: '#33333a',
+                            top: '0px',
+                            left: '90%',
+                            borderRadius: '0 40px 40px 0',
+                            border: '1px solid black',
+                            padding: '19px',
+                            width: '4%',
+                            [theme.breakpoints.down('sm')]: {
+                                left: '75%',
+                            },
+                        }}
+                        widthInput={{
+                            width: '90%',
+                            [theme.breakpoints.down('sm')]: {
+                                width: '75%',
+                            },
+                        }}
+                    />
                 </Box>
                 <Box>
                     {!mediaMobile ? (

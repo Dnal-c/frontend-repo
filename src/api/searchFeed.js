@@ -1,4 +1,4 @@
-import { $searchApi } from './../utils/common';
+import { $searchApi } from '../utils/common';
 
 export async function getSearchFeed(keyword) {
     const res = await $searchApi.get(`/search?text=${keyword}`);

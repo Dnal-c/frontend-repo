@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useLocation, useNavigate, useMatch, useSearchParams } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
-import { Autocomplete, Box, InputAdornment, TextField, createFilterOptions } from '@mui/material';
+import { Autocomplete, Box, InputAdornment, TextField } from '@mui/material';
 import { getAutocomplete } from '../../api/searchFeed';
 import useDebounce from '../../hooks/useDebounce';
 
-const Search = () => {
+const Search = ({ сssIcon, widthInput }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const [searchParams] = useSearchParams();
@@ -52,7 +52,7 @@ const Search = () => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <Box>
+            <Box sx={{ position: 'relative' }}>
                 <Autocomplete
                     freeSolo
                     options={optionsAutocomplete}
@@ -79,18 +79,22 @@ const Search = () => {
                             sx={{
                                 input: { color: '#fff', fontSize: '20px' },
                                 backgroundColor: '#25252C',
-                                borderRadius: '12px',
+                                borderRadius: '40px 0 0 40px',
                                 '& .MuiOutlinedInput-notchedOutline': {
                                     border: 'none',
                                 },
                                 '& .MuiAutocomplete-endAdornment .MuiSvgIcon-root': {
                                     color: '#00e5bc',
                                 },
-                                width: '100%',
+                                ...widthInput,
+                                border: '1px solid black',
                             }}
                         />
                     )}
                 />
+                <Box sx={сssIcon}>
+                    <SearchIcon sx={{ color: '#00e5bc', cursor: 'pointer' }} onClick={handleSubmit} />
+                </Box>
             </Box>
         </form>
     );

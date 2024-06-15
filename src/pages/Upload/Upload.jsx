@@ -1,5 +1,5 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { Box, Button, TextField, useMediaQuery, Switch, FormGroup, FormControlLabel } from '@mui/material';
+import React, { useLayoutEffect, useState } from 'react';
+import { Box, Button, TextField, Switch, FormGroup, FormControlLabel } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
@@ -7,7 +7,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import Video from '../../components/Videos/Video';
 import Spinner from '../../components/Spinner/Spinner';
-import { theme } from '../../utils/theme';
 import { postPredictByFile, postPredictByLink } from '../../api/upload';
 import SuccessUpload from '../../components/SuccessUpload/SuccessUpload';
 import ErrorUpload from '../../components/ErrorUpload/ErrorUpload';
