@@ -1,9 +1,9 @@
-import React, {Fragment, useEffect, useState} from 'react';
-import {useSearchParams} from 'react-router-dom';
-import {Box} from '@mui/material';
+import React, { Fragment, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { Box } from '@mui/material';
 import VideoItem from '../../components/Videos/VideoItem';
-import {getSearchFeed} from '../../api/searchFeed';
-import {theme} from './../../utils/theme';
+import { getSearchFeed } from '../../api/searchFeed';
+import { theme } from './../../utils/theme';
 
 const SearchFeed = () => {
     const [searchParams] = useSearchParams();

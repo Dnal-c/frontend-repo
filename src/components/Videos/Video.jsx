@@ -10,7 +10,15 @@ const Video = ({ url = '', width = '100%', height = '360px' }) => {
 
     return (
         <Box sx={{ width: width, position: 'relative' }} ref={ref}>
-            <ReactPlayer loop={true} playing={inView} muted controls={true} url={url} width={width} height={height} />
+            <ReactPlayer
+                loop={true}
+                playing={inView}
+                muted={false}
+                controls={true}
+                url={url}
+                width={width}
+                height={height}
+            />
         </Box>
     );
 };
