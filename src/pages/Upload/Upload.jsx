@@ -35,6 +35,7 @@ const Upload = () => {
     const [isOpenSuccessUpload, setIsOpenSuccessUpload] = useState(false);
     const [isOpenErrorUpload, setIsOpenErrorUpload] = useState(false);
     const [isOpenErrorFile, setIsOpenErrorFile] = useState(false);
+    const [textErrorUpload, setTextErrorUpload] = useState('"Может быть что-то с сервером"');
     const [successResult, setSuccessResult] = useState();
     const fileReader = new FileReader();
 
@@ -97,6 +98,7 @@ const Upload = () => {
                 setSuccessResult(res.data);
                 setIsOpenSuccessUpload(true);
             } catch (e) {
+                setTextErrorUpload(e.response.data.detail);
                 setIsOpenErrorUpload(true);
             }
         } else {
@@ -106,6 +108,7 @@ const Upload = () => {
                 setSuccessResult(res.data);
                 setIsOpenSuccessUpload(true);
             } catch (e) {
+                setTextErrorUpload(e.response.data.detail);
                 setIsOpenErrorUpload(true);
             }
         }
@@ -174,7 +177,7 @@ const Upload = () => {
                                     },
                                     [theme.breakpoints.down('md')]: {
                                         height: '60vh',
-                                        width: '30vw',
+                                        width: '75vw',
                                     },
                                 }}
                             >
@@ -199,7 +202,6 @@ const Upload = () => {
                                                     color: '#a4a4a4',
                                                     marginTop: '5vh',
                                                     [theme.breakpoints.down('md')]: {
-                                                        marginTop: '1vh',
                                                         width: '25px',
                                                         height: '25px',
                                                     },
@@ -211,6 +213,7 @@ const Upload = () => {
                                                     fontFamily: `'Roboto', sans-serif`,
                                                     [theme.breakpoints.down('md')]: {
                                                         fontSize: '0.75rem',
+                                                        marginTop: '5%',
                                                     },
                                                 }}
                                             >
@@ -308,6 +311,13 @@ const Upload = () => {
                                             />
                                         }
                                         label="Загрузить с помощью ссылки?"
+                                        sx={{
+                                            '& .MuiFormControlLabel-label': {
+                                                [theme.breakpoints.down('md')]: {
+                                                    fontSize: '0.75rem',
+                                                },
+                                            },
+                                        }}
                                     />
                                 </FormGroup>
                             )}
@@ -360,7 +370,7 @@ const Upload = () => {
                 <ErrorUpload
                     open={isOpenErrorUpload}
                     handleClose={() => setIsOpenErrorUpload(false)}
-                    text="Может быть что-то с сервером"
+                    text={textErrorUpload}
                 />
             )}
             {isOpenErrorFile && (

@@ -39,8 +39,7 @@ const VideoItem = ({ video_id: videoId, short_description, description, link }) 
                 <Box
                     sx={{
                         width: '100%',
-                        fontFamily: 'Roboto',
-                        // fontStyle: 'normal',
+                        fontFamily: 'Roboto,  sans-serif',
                     }}
                 >
                     {short_description}

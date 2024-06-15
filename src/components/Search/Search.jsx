@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useMatch, useSearchParams } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import { Autocomplete, Box, InputAdornment, TextField, useMediaQuery } from '@mui/material';
@@ -33,8 +33,6 @@ const Search = ({ сssIcon, widthInput }) => {
         if (isMatch) return;
         setValue('');
     }, [location, isMatch]);
-
-    const ref = useRef();
 
     const handleSubmit = (e) => {
         e.preventDefault();

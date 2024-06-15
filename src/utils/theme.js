@@ -3,9 +3,9 @@ import { createTheme } from '@mui/material';
 export const theme = createTheme({
     typography: {
         fontFamily: `'Roboto', sans-serif`,
-        
+
         p: {
-            fontFamily: `'Roboto', sans-serif`,
+            fontFamily: `'Roboto',  sans-serif`,
         },
     },
     components: {
