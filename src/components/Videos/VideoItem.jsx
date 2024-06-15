@@ -3,7 +3,7 @@ import Video from './Video';
 import { Box, useMediaQuery } from '@mui/material';
 import { theme } from '../../utils/theme';
 
-const VideoItem = ({ video_id: videoId, author, description, link }) => {
+const VideoItem = ({ video_id: videoId, short_description, description, link }) => {
     const mediaMobile = useMediaQuery(theme.breakpoints.down('md'));
     return (
         <Box
@@ -26,9 +26,8 @@ const VideoItem = ({ video_id: videoId, author, description, link }) => {
             />
             <Box
                 sx={{
-                    width: '100%',
-                    fontFamily: 'Roboto',
-                    // fontStyle: 'normal',
+                    display: 'flex',
+                    flexDirection: 'column',
                     [theme.breakpoints.down('md')]: {
                         position: 'absolute',
                         bottom: '10%',
@@ -37,7 +36,26 @@ const VideoItem = ({ video_id: videoId, author, description, link }) => {
                     },
                 }}
             >
-                {description}
+                <Box
+                    sx={{
+                        width: '100%',
+                        fontFamily: 'Roboto',
+                        // fontStyle: 'normal',
+                    }}
+                >
+                    {short_description}
+                </Box>
+                <Box
+                    sx={{
+                        marginTop: '15%',
+                        color: '#00e5bc',
+                        [theme.breakpoints.down('md')]: {
+                            marginTop: '3%',
+                        },
+                    }}
+                >
+                    {description}
+                </Box>
             </Box>
         </Box>
     );
