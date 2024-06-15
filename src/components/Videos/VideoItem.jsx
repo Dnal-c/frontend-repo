@@ -3,7 +3,7 @@ import Video from './Video';
 import { Box, useMediaQuery } from '@mui/material';
 import { theme } from '../../utils/theme';
 
-const VideoItem = ({ video_id: videoId, author, description_ru, link }) => {
+const VideoItem = ({ video_id: videoId, author, description, link }) => {
     const mediaMobile = useMediaQuery(theme.breakpoints.down('md'));
     return (
         <Box
@@ -37,7 +37,7 @@ const VideoItem = ({ video_id: videoId, author, description_ru, link }) => {
                     },
                 }}
             >
-                {description_ru}
+                {description}
             </Box>
         </Box>
     );
